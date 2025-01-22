@@ -3,3 +3,4 @@
 *.c
 panda_local
 MUJOCO_LOG.TXT
+xml_model
