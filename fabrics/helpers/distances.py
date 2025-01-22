@@ -220,6 +220,19 @@ def rectangle_to_point(
     )
     return ca.sqrt(half_distances[0] ** 2 + half_distances[1] ** 2)
 
+def rectangle_to_circle(
+    rectangle_center: ca.SX,
+    rectangle_size: ca.SX,
+    circle_center: ca.SX,
+    circle_size: ca.SX,
+
+) -> ca.SX:
+    return ca.fmax(
+        0.0,
+        rectangle_to_point(rectangle_center, rectangle_size, circle_center)
+        - circle_size,
+    )
+
 
 def rectangle_to_line(
     rectangle_center: ca.SX,
