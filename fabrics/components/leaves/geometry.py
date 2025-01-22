@@ -425,9 +425,9 @@ class SphereCuboidLeaf(GenericGeometryLeaf):
         cuboid_center_name = f"x_{obstacle_name}"
         radius_body_name = f"radius_body_{collision_link}"
         obstacle_dimension = self._forward_kinematics.size()[0]
-        size_cuboid = self.extract_or_create_variable(cuboid_size_name, 3)
+        size_cuboid = self.extract_or_create_variable(cuboid_size_name, obstacle_dimension)
         radius_body = self.extract_or_create_variable(radius_body_name, 1)
-        cuboid_center = self.extract_or_create_variable(cuboid_center_name, 3)
+        cuboid_center = self.extract_or_create_variable(cuboid_center_name, obstacle_dimension)
         geo_parameters = {
             cuboid_size_name: size_cuboid,
             radius_body_name: radius_body,

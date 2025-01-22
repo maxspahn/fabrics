@@ -60,10 +60,6 @@ class Leaf(object):
     def evaluate(self, **kwargs) -> Dict[str, np.ndarray]:
         x, J, Jdot = self._map.forward(**kwargs)
         xdot = np.dot(J, kwargs['qdot'])
-        return dict(
-            x=x,
-            xdot=xdot,
-        )
         if hasattr(self, '_geo') and hasattr(self, '_lag'):
             state_variable_names = list(self._geo._vars.state_variables().keys())
             task_space_arguments = {
