@@ -46,7 +46,7 @@ class CasadiFunctionWrapper(object):
         self.process_inputs(**kwargs)
         try:
             output_dict = self._function(**self._argument_dictionary)
-        except NotImplementedError:
+        except RuntimeError:
             expected_inputs = list(self._inputs.keys())
             received_inputs = list(self._argument_dictionary.keys())
             unique_expected = [x for x in expected_inputs if x not in received_inputs]
@@ -55,7 +55,12 @@ class CasadiFunctionWrapper(object):
             msg = "Inputs do not match\n"
             msg += f"Found unexpected inputs: {unique_received}\n"
             msg += f"Found missing inputs: {unique_expected}\n"
-            raise InputMissmatchError(msg)
+            if len(unique_expected) > 0:
+                raise InputMissmatchError(msg)
+            else:
+                for argument in unique_received:
+                    del self._argument_dictionary[argument]
+                output_dict = self._function(**self._argument_dictionary)
         for key, value in output_dict.items():
             if value.size() == (1, 1):
                 output_dict[key] = np.array(value)[:, 0]
